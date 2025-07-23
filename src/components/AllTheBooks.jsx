@@ -1,11 +1,14 @@
 import books from '../data/fantasy.json';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 
+
 const AllTheBooks = () => (
   <Container className="mt-4">
     <Row>
       {books.map(book => (
-        <Col xs={12} md={4} lg={3} key={book.asin} className="mb-4">
+        <Col xs={12} md={4} lg={3} 
+         key={book.asin} 
+          className="mb-4">
           <Card>
             <Card.Img variant="top" src={book.img} />
             <Card.Body>
@@ -18,5 +21,4 @@ const AllTheBooks = () => (
     </Row>
   </Container>
 );
-
 export default AllTheBooks;

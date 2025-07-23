@@ -10,7 +10,6 @@ class SingleBook extends Component {
     this.setState(
       prevState => ({ selected: !prevState.selected }),
       () => {
-        // Notifica la selezione a BookList/App
         this.props.onSelect();
       }
     );
@@ -38,7 +37,6 @@ class SingleBook extends Component {
     );
   }
 }
-
 export default SingleBook;
 
 

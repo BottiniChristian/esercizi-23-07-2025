@@ -1,7 +1,8 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const MyNav = () => (
-  <Navbar bg="dark" variant="dark" expand="lg" className='rounded-navbar'>
+  <Navbar bg="dark" variant="dark" expand="lg" 
+    className='rounded-navbar'>
     <Container>
       <Navbar.Brand href="#">EpiBooks</Navbar.Brand>
       <Nav className="me-auto">
@@ -12,5 +13,4 @@ const MyNav = () => (
     </Container>
   </Navbar>
 );
-
 export default MyNav;

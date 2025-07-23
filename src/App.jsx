@@ -5,9 +5,9 @@ import BookList from "./components/BookList";
 import fantasy from "./data/fantasy.json";
 
 const App = () => {
-  const [selectedBook, setSelectedBook] = useState(null);
+const [selectedBook, setSelectedBook] = useState(null);
 
-  return (
+ return (
     <>
       <MyNav />
       <Welcome />
@@ -16,7 +16,9 @@ const App = () => {
       {selectedBook && (
         <div style={{ margin: "2rem", padding: "1rem", border: "1px solid #ccc" }}>
           <h3>Dettagli libro selezionato</h3>
-          <img src={selectedBook.img} alt={selectedBook.title} style={{ height: "200px" }} />
+          <img src={selectedBook.img} 
+           alt={selectedBook.title} 
+           style={{ height: "200px" }} />
           <h4>{selectedBook.title}</h4>
           <p>Categoria: {selectedBook.category}</p>
           <p>Prezzo: €{selectedBook.price}</p>
@@ -25,7 +27,6 @@ const App = () => {
     </>
   );
 };
-
 export default App;
 
 

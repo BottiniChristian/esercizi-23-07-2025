@@ -10,7 +10,7 @@ const App = () => {
     <>
       <MyNav />
       <Welcome />
-      <BookList books={fantasy} />
+     <BookList books={fantasy} onSelectBook={() => {}} />
       <MyFooter />
     </>
   );

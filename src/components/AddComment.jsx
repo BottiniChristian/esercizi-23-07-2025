@@ -8,11 +8,11 @@ const AddComment = ({ asin, onNewComment }) => {
   const postComment = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("https://striveschool-api.herokuapp.com/api/comments", {
+      const res = await fetch("https://striveschool-api.herokuapp.com/api/comments/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer YOUR_TOKEN_HERE"
+          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODcwYmIyNDc4Y2RkZjAwMTU1ZDY3OWUiLCJpYXQiOjE3NTMzNjEwNjgsImV4cCI6MTc1NDU3MDY2OH0.Y6clJsq0Yt7frciP6M2QdFSHwBdBWYZhfgvrr3hRwnU",
         },
         body: JSON.stringify({ comment, rate, elementId: asin })
       });
@@ -50,5 +50,6 @@ const AddComment = ({ asin, onNewComment }) => {
     </Form>
   );
 };
-
 export default AddComment;
+
+

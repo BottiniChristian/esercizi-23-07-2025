@@ -3,7 +3,7 @@ import CommentArea from "./CommentArea";
 
 const SingleBook = ({ book, onSelect, selected }) => {
   const handleCardClick = () => {
-    onSelect(book.asin); // avvisa il componente padre che questa card è stata selezionata
+    onSelect(book.asin); 
   };
 
   return (
@@ -11,7 +11,7 @@ const SingleBook = ({ book, onSelect, selected }) => {
       onClick={handleCardClick}
       className={`h-100 ${selected ? "border border-danger" : ""}`}
       style={{
-        height: "300px", // altezza fissa più piccola perché commenti fuori
+        height: "300px", 
         cursor: "pointer",
       }}
     >
@@ -32,7 +32,6 @@ const SingleBook = ({ book, onSelect, selected }) => {
     </Card>
   );
 };
-
 export default SingleBook;
 
 

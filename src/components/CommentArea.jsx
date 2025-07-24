@@ -47,5 +47,4 @@ const CommentArea = ({ asin }) => {
     </div>
   );
 };
-
 export default CommentArea;

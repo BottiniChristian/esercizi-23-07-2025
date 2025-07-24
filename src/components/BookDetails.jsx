@@ -18,5 +18,4 @@ const BookDetails = ({ book }) => {
     </Container>
   );
 };
-
 export default BookDetails;

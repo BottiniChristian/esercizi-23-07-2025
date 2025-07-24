@@ -1,7 +1,6 @@
 import books from '../data/fantasy.json';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 
-
 const AllTheBooks = () => (
   <Container className="mt-4">
     <Row>

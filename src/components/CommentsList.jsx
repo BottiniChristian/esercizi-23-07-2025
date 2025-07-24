@@ -7,5 +7,4 @@ const CommentsList = ({ comments, onDelete }) => (
     ))}
   </ul>
 );
-
 export default CommentsList;

@@ -1,24 +1,19 @@
-import React, { useState } from "react";
-import MyNav from "./components/MyNav";
-import Welcome from "./components/Welcome";
-import MyFooter from "./components/MyFooter";
-import BookList from "./components/BookList";
-import fantasy from "./data/fantasy.json";
-import BookDetails from "./components/BookDetails";
+import MyNav from './components/MyNav'
+import MyFooter from './components/MyFooter'
+import Welcome from './components/Welcome'
+import BookList from './components/BookList'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-const App = () => {
-const [selectedBook, setSelectedBook] = useState(null);
-
+function App() {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <MyNav />
+      <main className="flex-grow-1 container my-3">
       <Welcome />
-      <BookList books={fantasy} onSelectBook={setSelectedBook} />
-      {selectedBook && <BookDetails book={selectedBook} />} {}
+      <BookList />
+      </main>
       <MyFooter />
-    </>
-  );
-};
-
-export default App;
-
+    </div>
+  )
+}
+export default App

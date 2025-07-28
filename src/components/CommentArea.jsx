@@ -1,50 +1,57 @@
-import { useEffect, useState } from "react";
-import CommentsList from "./CommentsList";
-import AddComment from "./AddComment";
-import Loading from "./Loading";
-import Error from "./Error";
+import { Component } from 'react'
+import CommentsList from './CommentsList'
+import AddComment from './AddComment'
+import Loading from './Loading'
+import Error from './Error'
 
-const CommentArea = ({ asin }) => {
-  const [comments, setComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
-
-  const fetchComments = async () => {
-    setIsLoading(true);
-    setHasError(false);
-    try {
-     const res = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${asin}`, {
-    headers: {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODcwYmIyNDc4Y2RkZjAwMTU1ZDY3OWUiLCJpYXQiOjE3NTMzNjEwNjgsImV4cCI6MTc1NDU3MDY2OH0.Y6clJsq0Yt7frciP6M2QdFSHwBdBWYZhfgvrr3hRwnU",
-    },
-    });
-
-      if (!res.ok) throw new Error("Errore nel fetch");
-      const data = await res.json();
-      setComments(data);
-    } catch (error) {
-      console.error(error);
-      setHasError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-  if (asin) {
-    fetchComments();
+class CommentArea extends Component {
+  state = {
+  comments: [],
+  isLoading: false,
+  isError: false,
   }
-}, [asin]);
 
+  fetchComments = async () => {
+    if (!this.props.asin) return
+    this.setState({ isLoading: true, isError: false })
 
-  return (
-    <div className="mt-3">
-      {isLoading && <Loading />}
-      {hasError && <Error />}
-      <CommentsList comments={comments} onDelete={fetchComments} />
-      <AddComment asin={asin} onNewComment={fetchComments} />
-    </div>
-  );
-};
-export default CommentArea;
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/comments/${this.props.asin}`,
+        {
+          headers: {
+            Authorization: 
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODcwYmIyNDc4Y2RkZjAwMTU1ZDY3OWUiLCJpYXQiOjE3NTM3MDU0ODAsImV4cCI6MTc1NDkxNTA4MH0.7pdkzsNDwmq9rH6xCzIVp-YXrwegm8KI15nYtPseSpM",
+          },
+        }
+      )
+      if (!response.ok) throw new Error('Fetch failed')
+      const data = await response.json()
+      this.setState({ comments: data, isLoading: false })
+    } catch {
+      this.setState({ isLoading: false, isError: true })
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.asin !== this.props.asin) {
+      this.fetchComments()
+    }
+  }
+
+  render() {
+    if (!this.props.asin) {
+      return <div className="alert alert-info">Seleziona un libro per vedere i commenti</div>
+    }
+
+    return (
+      <div>
+        {this.state.isLoading && <Loading />}
+        {this.state.isError && <Error />}
+        <CommentsList comments={this.state.comments} refresh={this.fetchComments} />
+        <AddComment asin={this.props.asin} refresh={this.fetchComments} />
+      </div>
+    )
+  }
+}
+export default CommentArea

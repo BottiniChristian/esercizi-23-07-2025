@@ -1,65 +1,43 @@
-import { useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import SingleBook from "./SingleBook";
-import CommentArea from "./CommentArea";
+import { Component } from 'react'
+import { Row, Col } from 'react-bootstrap'
+import fantasy from '../data/fantasy.json'
+import SingleBook from './SingleBook'
+import CommentArea from './CommentArea'
 
-const BookList = ({ books }) => {
-  const [search, setSearch] = useState("");
-  const [showAll, setShowAll] = useState(false);
-  const [selectedAsin, setSelectedAsin] = useState(null);
+class BookList extends Component {
+  state = {
+  selectedAsin: null,
+  }
 
-  const handleToggle = () => setShowAll(!showAll);
+  handleBookClick = (asin) => {
+    this.setState({ selectedAsin: asin })
+  }
 
-  const isSearching = search.trim() !== "";
+  render() {
+    return (
+      <Row>
+        <Col md={8}>
+          <Row className="g-2">
+            {fantasy.map((book) => (
+              <Col xs={12} md={4} key={book.asin}>
+                <SingleBook
+                  book={book}
+                  isSelected={this.state.selectedAsin === book.asin}
+                  onBookClick={this.handleBookClick}
+                />
+              </Col>
+            ))}
+          </Row>
+        </Col>
 
-  const filteredBooks = isSearching
-    ? books.filter((book) =>
-        book.title.toLowerCase().includes(search.toLowerCase())
-      )
-    : showAll
-    ? books
-    : books.slice(0, 8);
-
-  const selectedBook = books.find((book) => book.asin === selectedAsin);
-
-  return (
-    <Container>
-      <Form.Control
-        type="text"
-        placeholder="Cerca un libro..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="my-3"
-      />
-      {!isSearching && (
-        <div className="text-center mb-4">
-          <Button variant="outline-secondary" onClick={handleToggle}>
-            {showAll ? "Mostra meno" : "Mostra tutti"}
-          </Button>
-        </div>
-      )}
-
-      <Row xs={1} md={3} lg={4} className="g-4">
-        {filteredBooks.map((book) => (
-          <Col key={book.asin}>
-            <SingleBook
-              book={book}
-              onSelect={() => setSelectedAsin(book.asin)}
-              selected={selectedAsin === book.asin}
-            />
-          </Col>
-        ))}
+        <Col md={4}>
+        <CommentArea asin={this.state.selectedAsin} />
+        </Col>
       </Row>
+    )
+  }
+}
+export default BookList
 
-      {selectedBook && (
-        <div style={{ marginTop: "2rem", border: "1px solid #ccc", padding: "1rem" }}>
-          <h4>Dettagli e recensioni per: {selectedBook.title}</h4>
-          <CommentArea asin={selectedBook.asin} />
-        </div>
-      )}
-    </Container>
-  );
-};
-export default BookList;
 
 
